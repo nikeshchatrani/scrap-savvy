@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/scrap-savvy/static/css/main.624518df.css",
+    "main.js": "/scrap-savvy/static/js/main.bfacf07b.js",
+    "static/js/453.e13267f0.chunk.js": "/scrap-savvy/static/js/453.e13267f0.chunk.js",
+    "index.html": "/scrap-savvy/index.html",
+    "main.624518df.css.map": "/scrap-savvy/static/css/main.624518df.css.map",
+    "main.bfacf07b.js.map": "/scrap-savvy/static/js/main.bfacf07b.js.map",
+    "453.e13267f0.chunk.js.map": "/scrap-savvy/static/js/453.e13267f0.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.624518df.css",
+    "static/js/main.bfacf07b.js"
+  ]
+}
