@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { MapPin, Phone, Mail } from "lucide-react";
-
+import logo from "./images/scrap_savvy_logo_latest.png";
+import circularEconomy from "./images/circular_economy.jpeg";
 export default function ScrapSavvyHome() {
   // 1. State for form fields
   const [form, setForm] = useState({
@@ -50,7 +51,7 @@ export default function ScrapSavvyHome() {
         {/* <h1 className="text-2xl font-bold">Scrap Savvy</h1> */}
         <div className="flex items-center gap-2 mb-2 md:mb-0 bg-white pr-2 py-1 rounded">
           <img
-            src="/scrap_savvy_logo_latest.png" // Place your logo image in public/logo.png or update the path
+            src={logo} // Place your logo image in public/logo.png or update the path
             alt="Scrap Savvy Logo"
             className="h-10 w-24 object-cover"
           />
@@ -114,7 +115,7 @@ export default function ScrapSavvyHome() {
           >
             {/* The circular image */}
             <img
-              src="/circular_economy.jpeg"
+              src={circularEconomy}
               alt="Circular Economy Illustration"
               className="w-80 h-72 object-cover shadow"
             />
