@@ -1,7 +1,471 @@
 import { useEffect, useState } from "react";
-import { MapPin, Phone, Mail } from "lucide-react";
+import {
+  MapPin,
+  Phone,
+  Mail,
+  Search,
+  IndianRupee,
+  Package,
+  Smartphone,
+  Cpu,
+  Recycle,
+  AirVent,
+  ScrollText,
+  Box,
+  Milk,
+  InspectionPanel,
+  Utensils,
+  WashingMachine,
+  Refrigerator,
+  Dam,
+  Fan,
+  Printer,
+  Cable,
+  Tv,
+  Microwave,
+  BatteryFull,
+  Laptop,
+  Monitor,
+  MonitorSmartphone,
+  Bike,
+  Car,
+} from "lucide-react";
 import logo from "./images/scrap_savvy_logo_latest.png";
 import circularEconomy from "./images/circular_economy.jpeg";
+
+// Helper to map string to icon component
+const ICONS = {
+  Cpu,
+  Smartphone,
+  AirVent,
+  Package,
+  Recycle,
+  ScrollText,
+  Box,
+  Milk,
+  InspectionPanel,
+  Utensils,
+  WashingMachine,
+  Refrigerator,
+  Dam,
+  Fan,
+  Printer,
+  Cable,
+  Tv,
+  Microwave,
+  BatteryFull,
+  Laptop,
+  Monitor,
+  MonitorSmartphone,
+  Bike,
+  Car,
+  // add more mappings as needed
+};
+
+// ---- PRICE DATA ----
+const PRICE_CATALOG = {
+  "Normal Recyclables": [
+    {
+      type: "Paper",
+      name: "Books / Newspaper",
+      icon: "ScrollText",
+      price: "₹12–₹15",
+      unit: "kg",
+    },
+    {
+      type: "Cardboard",
+      name: "Boxes / Cartons",
+      icon: "Box",
+      price: "₹12",
+      unit: "kg",
+    },
+    {
+      type: "Plastic",
+      name: "Bottles / Containers",
+      icon: "Milk",
+      price: "₹8",
+      unit: "kg",
+    },
+    {
+      type: "Metal",
+      name: "Aluminium",
+      price: "₹105",
+      icon: "InspectionPanel",
+      unit: "kg",
+    },
+    {
+      type: "Metal",
+      name: "Brass",
+      icon: "InspectionPanel",
+      price: "₹305",
+      unit: "kg",
+    },
+    {
+      type: "Metal",
+      name: "Copper",
+      icon: "InspectionPanel",
+      price: "₹425",
+      unit: "kg",
+    },
+    {
+      type: "Metal",
+      name: "Iron",
+      icon: "InspectionPanel",
+      price: "₹25",
+      unit: "kg",
+    },
+    {
+      type: "Utensils",
+      icon: "Utensils",
+      name: "Steel Utensils",
+      price: "₹40",
+      unit: "kg",
+    },
+  ],
+  "Large Appliances": [
+    {
+      type: "AC 2T",
+      name: "Split/Window AC (Copper coil)",
+      price: "₹5600",
+      unit: "piece",
+    },
+    {
+      type: "AC 1.5T Coil",
+      name: "Split/Window AC (Indoor/Outdoor)",
+      price: "₹4150",
+      unit: "piece",
+    },
+    {
+      type: "AC 1T",
+      name: "Window AC (Copper coil)",
+      price: "₹3000",
+      unit: "piece",
+    },
+    {
+      type: "Washing Machine",
+      name: "Front Load (Fully Automatic)",
+      price: "₹1350",
+      unit: "piece",
+      icon: "WashingMachine",
+    },
+    {
+      type: "Washing Machine",
+      name: "Semi Automatic (Double Drum)",
+      icon: "WashingMachine",
+      price: "₹750",
+      unit: "piece",
+    },
+    {
+      type: "Fridge",
+      name: "Double Door",
+      price: "₹1550",
+      unit: "piece",
+      icon: "Refrigerator",
+    },
+    {
+      type: "Fridge",
+      name: "Single Door",
+      price: "₹1200",
+      unit: "piece",
+      icon: "Refrigerator",
+    },
+    { type: "Geyser", name: "Geyser", icon: "Dam", price: "₹20", unit: "kg" },
+    {
+      type: "Cooler",
+      name: "Iron Cooler",
+      icon: "Fan",
+      price: "₹24",
+      unit: "kg",
+    },
+    {
+      type: "Cooler",
+      name: "Plastic Cooler",
+      icon: "Fan",
+      price: "₹15",
+      unit: "kg",
+    },
+  ],
+  "Small Appliances": [
+    {
+      type: "Printer/Scanner",
+      name: "FAX / Printer / Scanner",
+      price: "₹20",
+      icon: "Printer",
+      unit: "kg",
+    },
+    {
+      type: "Metal E-waste",
+      name: "Small devices",
+      icon: "Recycle",
+      price: "₹28",
+      unit: "kg",
+    },
+    {
+      type: "Plastic E-waste",
+      name: "Small devices",
+      price: "₹15",
+      icon: "Recycle",
+      unit: "kg",
+    },
+    {
+      type: "Motors(Copper wiring)",
+      name: "Small devices",
+      icon: "Cable",
+      price: "₹35",
+      unit: "kg",
+    },
+    {
+      type: "CRT TV",
+      name: "CRT Television",
+      icon: "Tv",
+      price: "₹200",
+      unit: "piece",
+    },
+    {
+      type: "Ceiling Fan",
+      name: "Fan unit",
+      icon: "Fan",
+      price: "₹35",
+      unit: "kg",
+    },
+    {
+      type: "Microwave",
+      name: "Solo/Convection",
+      price: "₹350",
+      unit: "piece",
+      icon: "Microwave",
+    },
+    { type: "UPS", name: "Home/Office", price: "₹180", unit: "piece" },
+    { type: "Inverter", name: "Inverter/Stabilizer", price: "₹40", unit: "kg" },
+    {
+      type: "Battery",
+      name: "Battery and Inverter",
+      icon: "BatteryFull",
+      price: "₹81",
+      unit: "kg",
+    },
+  ],
+  "Mobiles & Computers": [
+    {
+      type: "Laptop",
+      name: "Scrap Laptop",
+      icon: "Laptop",
+      price: "₹300",
+      unit: "piece",
+    },
+    {
+      type: "Monitor",
+      icon: "Monitor",
+      name: "CRT Monitor",
+      price: "₹150",
+      unit: "piece",
+    },
+    {
+      type: "Monitor",
+      icon: "Monitor",
+      name: "LCD Monitor",
+      price: "₹200",
+      unit: "piece",
+    },
+    {
+      type: "CPU",
+      name: "Computer CPU",
+      icon: "Cpu",
+      price: "₹225",
+      unit: "piece",
+    },
+    {
+      type: "E-Waste",
+      name: "Mobiles / Laptops (usable parts)",
+      price: "On request",
+      unit: "piece",
+      badge: "Varies",
+      icon: "MonitorSmartphone",
+    },
+  ],
+  Others: [
+    {
+      type: "Vehicle",
+      name: "Bike",
+      icon: "Bike",
+      price: "₹2000",
+      unit: "piece",
+    },
+    {
+      type: "Vehicle",
+      name: "Car",
+      icon: "Car",
+      price: "₹20000",
+      unit: "piece",
+    },
+  ],
+};
+
+function classNames(...c) {
+  return c.filter(Boolean).join(" ");
+}
+
+function PriceChip({ price, unit }) {
+  return (
+    <span className="inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-sm">
+      <IndianRupee size={14} aria-hidden /> {price}
+      <span className="text-gray-500">/ {unit}</span>
+    </span>
+  );
+}
+
+function ItemIcon({ item, cat }) {
+  // Use item's icon if specified, else fallback to category icon
+  const IconComp =
+    item.icon && ICONS[item.icon]
+      ? ICONS[item.icon]
+      : cat === "Mobiles & Computers"
+      ? Cpu
+      : cat === "Large Appliances"
+      ? AirVent
+      : cat === "Small Appliances"
+      ? Smartphone
+      : Recycle;
+  return <IconComp size={18} />;
+}
+
+function PriceList() {
+  const categories = Object.keys(PRICE_CATALOG);
+  const [active, setActive] = useState(categories[0]);
+  const [q, setQ] = useState("");
+  const [view, setView] = useState("cards"); // "cards" | "table"
+
+  const items = PRICE_CATALOG[active].filter(
+    (i) =>
+      i.type.toLowerCase().includes(q.toLowerCase()) ||
+      i.name.toLowerCase().includes(q.toLowerCase())
+  );
+
+  return (
+    <section id="prices" className="p-6 md:p-8 bg-white rounded-lg shadow-sm">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <h2 className="text-2xl font-bold">Price List</h2>
+        <div className="flex gap-2">
+          <div className="relative">
+            <Search className="absolute left-3 top-2.5" size={16} />
+            <input
+              aria-label="Search items"
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+              placeholder="Search type or item…"
+              className="w-56 rounded border pl-8 pr-3 py-2"
+            />
+          </div>
+          <div className="inline-flex rounded border overflow-hidden">
+            <button
+              onClick={() => setView("cards")}
+              className={classNames(
+                "px-3 py-2 text-sm",
+                view === "cards" ? "bg-gray-100" : "bg-white"
+              )}
+            >
+              Cards
+            </button>
+            <button
+              onClick={() => setView("table")}
+              className={classNames(
+                "px-3 py-2 text-sm border-l",
+                view === "table" ? "bg-gray-100" : "bg-white"
+              )}
+            >
+              Table
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Tabs */}
+      <div className="mt-4 flex flex-wrap gap-2">
+        {categories.map((cat) => (
+          <button
+            key={cat}
+            onClick={() => setActive(cat)}
+            className={classNames(
+              "rounded-full px-4 py-2 text-sm border",
+              active === cat
+                ? "bg-green-600 text-white border-green-600"
+                : "bg-white hover:bg-gray-50"
+            )}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+
+      {/* Cards view */}
+      {view === "cards" && (
+        <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          {items.map((i, idx) => (
+            <div
+              key={idx}
+              className="rounded-xl border p-4 hover:shadow-sm transition"
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <ItemIcon item={i} cat={active} /> {i.type}
+                </div>
+                <PriceChip price={i.price} unit={i.unit} />
+              </div>
+              <div className="mt-2 text-lg font-semibold">{i.name}</div>
+              {i.badge && (
+                <span className="mt-3 inline-block rounded bg-amber-100 px-2 py-0.5 text-xs text-amber-800">
+                  {i.badge}
+                </span>
+              )}
+            </div>
+          ))}
+          {items.length === 0 && (
+            <p className="col-span-full text-center text-gray-500 py-8">
+              No items match your search.
+            </p>
+          )}
+        </div>
+      )}
+
+      {/* Table view */}
+      {view === "table" && (
+        <div className="mt-6 overflow-x-auto">
+          <table className="min-w-full border bg-white text-sm">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="p-2 border text-left w-36">Type</th>
+                <th className="p-2 border text-left">Item</th>
+                <th className="p-2 border text-left w-40">Price</th>
+                <th className="p-2 border text-left w-24">Unit</th>
+              </tr>
+            </thead>
+            <tbody>
+              {items.map((i, idx) => (
+                <tr key={idx} className="even:bg-gray-50/40">
+                  <td className="p-2 border">{i.type}</td>
+                  <td className="p-2 border">{i.name}</td>
+                  <td className="p-2 border">{i.price}</td>
+                  <td className="p-2 border">₹/{i.unit}</td>
+                </tr>
+              ))}
+              {items.length === 0 && (
+                <tr>
+                  <td
+                    className="p-4 text-center text-gray-500 border"
+                    colSpan={4}
+                  >
+                    No items match your search.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </section>
+  );
+}
+
 export default function ScrapSavvyHome() {
   // 1. State for form fields
   const [form, setForm] = useState({
@@ -199,7 +663,7 @@ export default function ScrapSavvyHome() {
         </section>
 
         {/* Price List */}
-        <section id="prices" className="p-6">
+        {/*  <section id="prices" className="p-6">
           <h2 className="text-2xl font-bold mb-4">Price List</h2>
           <div className="overflow-x-auto">
             <table className="min-w-full bg-white border">
@@ -213,18 +677,43 @@ export default function ScrapSavvyHome() {
               <tbody>
                 <tr>
                   <td className="p-2 border">Paper</td>
-                  <td className="p-2 border">Newspaper, Books</td>
-                  <td className="p-2 border">₹10–₹12</td>
+                  <td className="p-2 border">Books, Newspaper</td>
+                  <td className="p-2 border">₹12-₹15</td>
+                </tr>
+                <tr>
+                  <td className="p-2 border">Cardboard</td>
+                  <td className="p-2 border">Boxes, Carton</td>
+                  <td className="p-2 border">₹12</td>
                 </tr>
                 <tr>
                   <td className="p-2 border">Plastic</td>
                   <td className="p-2 border">Bottles, Containers</td>
-                  <td className="p-2 border">₹5–₹7</td>
+                  <td className="p-2 border">₹8</td>
                 </tr>
                 <tr>
                   <td className="p-2 border">Metal</td>
-                  <td className="p-2 border">Iron, Aluminum</td>
-                  <td className="p-2 border">₹20–₹40</td>
+                  <td className="p-2 border">Aluminium</td>
+                  <td className="p-2 border">₹105</td>
+                </tr>
+                <tr>
+                  <td className="p-2 border">Metal</td>
+                  <td className="p-2 border">Brass</td>
+                  <td className="p-2 border">₹305</td>
+                </tr>
+                <tr>
+                  <td className="p-2 border">Metal</td>
+                  <td className="p-2 border">Copper</td>
+                  <td className="p-2 border">₹425</td>
+                </tr>
+                <tr>
+                  <td className="p-2 border">Metal</td>
+                  <td className="p-2 border">Iron</td>
+                  <td className="p-2 border">₹25</td>
+                </tr>
+                <tr>
+                  <td className="p-2 border">Utensils</td>
+                  <td className="p-2 border">Steel Utensils</td>
+                  <td className="p-2 border">₹40</td>
                 </tr>
                 <tr>
                   <td className="p-2 border">E-Waste</td>
@@ -234,7 +723,8 @@ export default function ScrapSavvyHome() {
               </tbody>
             </table>
           </div>
-        </section>
+        </section> */}
+        <PriceList />
 
         {/* How It Works */}
         <section id="how" className="bg-gray-100 p-6">
@@ -308,7 +798,7 @@ export default function ScrapSavvyHome() {
                 <Phone size={18} /> +91-9726312867
               </p>
               <p className="flex items-center gap-2">
-                <Mail size={18} /> contact@scrapsavvy.in
+                <Mail size={18} /> scrapsavvy19@gmail.com
               </p>
               <p className="flex items-center gap-2">
                 <MapPin size={18} /> Ahmedabad, Gujarat
