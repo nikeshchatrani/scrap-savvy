@@ -801,7 +801,8 @@ export default function ScrapSavvyHome() {
                 <Mail size={18} /> scrapsavvy19@gmail.com
               </p>
               <p className="flex items-center gap-2">
-                <MapPin size={18} /> Ahmedabad, Gujarat
+                <MapPin size={18} /> 2296 Bhut Ni Ambli, Astodia Kot Ni Rang,
+                Astodia, near Vadilal Chambers, Ahmedabad. 380001
               </p>
             </div>
           </div>
