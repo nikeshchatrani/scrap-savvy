@@ -158,14 +158,14 @@ const PRICE_CATALOG = {
     {
       type: "Fridge",
       name: "Double Door",
-      price: "₹1550",
+      price: "₹1000",
       unit: "piece",
       icon: "Refrigerator",
     },
     {
       type: "Fridge",
       name: "Single Door",
-      price: "₹1200",
+      price: "₹900",
       unit: "piece",
       icon: "Refrigerator",
     },
@@ -264,8 +264,8 @@ const PRICE_CATALOG = {
       type: "Monitor",
       icon: "Monitor",
       name: "LCD Monitor",
-      price: "₹200",
-      unit: "piece",
+      price: "₹30",
+      unit: "kg",
     },
     {
       type: "CPU",
