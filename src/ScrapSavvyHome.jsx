@@ -320,17 +320,19 @@ function ItemIcon({ item, cat }) {
     item.icon && ICONS[item.icon]
       ? ICONS[item.icon]
       : cat === "Mobiles & Computers"
-      ? Cpu
-      : cat === "Large Appliances"
-      ? AirVent
-      : cat === "Small Appliances"
-      ? Smartphone
-      : Recycle;
+        ? Cpu
+        : cat === "Large Appliances"
+          ? AirVent
+          : cat === "Small Appliances"
+            ? Smartphone
+            : Recycle;
   return <IconComp size={18} />;
 }
 
 function PriceList() {
-  const categories = Object.keys(PRICE_CATALOG);
+  const categories = Object.keys(PRICE_CATALOG).filter(
+    (category) => category !== "Normal Recyclables",
+  );
   const [active, setActive] = useState(categories[0]);
   const [q, setQ] = useState("");
   const [view, setView] = useState("cards"); // "cards" | "table"
@@ -338,7 +340,7 @@ function PriceList() {
   const items = PRICE_CATALOG[active].filter(
     (i) =>
       i.type.toLowerCase().includes(q.toLowerCase()) ||
-      i.name.toLowerCase().includes(q.toLowerCase())
+      i.name.toLowerCase().includes(q.toLowerCase()),
   );
 
   return (
@@ -361,7 +363,7 @@ function PriceList() {
               onClick={() => setView("cards")}
               className={classNames(
                 "px-3 py-2 text-sm",
-                view === "cards" ? "bg-gray-100" : "bg-white"
+                view === "cards" ? "bg-gray-100" : "bg-white",
               )}
             >
               Cards
@@ -370,7 +372,7 @@ function PriceList() {
               onClick={() => setView("table")}
               className={classNames(
                 "px-3 py-2 text-sm border-l",
-                view === "table" ? "bg-gray-100" : "bg-white"
+                view === "table" ? "bg-gray-100" : "bg-white",
               )}
             >
               Table
@@ -389,7 +391,7 @@ function PriceList() {
               "rounded-full px-4 py-2 text-sm border",
               active === cat
                 ? "bg-green-600 text-white border-green-600"
-                : "bg-white hover:bg-gray-50"
+                : "bg-white hover:bg-gray-50",
             )}
           >
             {cat}
@@ -484,7 +486,7 @@ export default function ScrapSavvyHome() {
   const handleWhatsAppSubmit = (e) => {
     e.preventDefault();
     const text = encodeURIComponent(
-      `Hi, I want to schedule a pickup!\n\nName: ${form.name}\nPhone: ${form.phone}\nWaste Type: ${form.waste}\nMessage: ${form.message}`
+      `Hi, I want to schedule a pickup!\n\nName: ${form.name}\nPhone: ${form.phone}\nWaste Type: ${form.waste}\nMessage: ${form.message}`,
     );
     window.open(`https://wa.me/919726312867?text=${text}`, "_blank");
   };
@@ -749,6 +751,9 @@ export default function ScrapSavvyHome() {
 
         {/* Contact */}
         <section id="contact" className="p-6">
+          <div className="mb-4 rounded-lg border border-green-200 bg-green-50 p-4 text-green-900 shadow-sm">
+            You can contact us to sell any scrap in bulk.
+          </div>
           <h2 className="text-2xl font-bold mb-4">Contact Us</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <form className="space-y-4" onSubmit={handleWhatsAppSubmit}>
