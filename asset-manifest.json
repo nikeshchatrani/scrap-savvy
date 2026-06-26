@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/static/css/main.c91f7eb4.css",
-    "main.js": "/static/js/main.e84e224a.js",
+    "main.css": "/static/css/main.0ebfc72b.css",
+    "main.js": "/static/js/main.014e4f68.js",
     "static/js/453.e13267f0.chunk.js": "/static/js/453.e13267f0.chunk.js",
     "static/media/scrap_savvy_logo_latest.png": "/static/media/scrap_savvy_logo_latest.e44ba07ed26481b84fd9.png",
     "static/media/circular_economy.jpeg": "/static/media/circular_economy.afcb02312a15b9660c44.jpeg",
     "index.html": "/index.html",
-    "main.c91f7eb4.css.map": "/static/css/main.c91f7eb4.css.map",
-    "main.e84e224a.js.map": "/static/js/main.e84e224a.js.map",
+    "main.0ebfc72b.css.map": "/static/css/main.0ebfc72b.css.map",
+    "main.014e4f68.js.map": "/static/js/main.014e4f68.js.map",
     "453.e13267f0.chunk.js.map": "/static/js/453.e13267f0.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.c91f7eb4.css",
-    "static/js/main.e84e224a.js"
+    "static/css/main.0ebfc72b.css",
+    "static/js/main.014e4f68.js"
   ]
 }
